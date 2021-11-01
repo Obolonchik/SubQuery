@@ -1,0 +1,159 @@
+specVersion: 0.0.1
+description: Hello
+repository: >-
+  переходим в проект
+
+  cd HellowWorld
+
+  устанавливаем зависимость
+
+  npm install
+
+  npm run codegen
+
+  npm run build
+
+  В каталоге выполнения следующую команду
+
+  docker-compose pull
+
+
+  docker-compose up
+
+
+  4. переходем в браузер, пишем ваш (ip_adress): 3000
+
+  в загрузившейся странице вбиваем
+
+  { 
+    query { 
+      starterEntities (first: 10) { 
+        nodes { 
+          field1 
+          field2 
+          field3 
+        } 
+      } 
+    } 
+  }
+
+
+  5. Далее нужен GitHub. Если его нет регестрируемся https://github.com
+
+  На сервере в консоле пишем:
+
+  sudo apt install git
+
+  git config --global user.name "ИМЯ ИЗ ГИТХАБА"
+
+  git config --global user.email "свой email"
+
+  далее
+
+  eval $ (ssh-agent -s)
+
+  вместо my@emailaddress.com -указываем свой email
+
+  ssh-keygen -t rsa -b 4096 -C "my@emailaddress.com" -f ~/.ssh/id_rsa
+
+  нажимаем enter, ещё раз enter
+
+  выводим ключ на экран и копируем полностью
+
+  cat ~/.ssh/id_rsa.pub
+
+
+  6. направляемся в https://github.com
+
+  Создаем репозиторий
+
+
+  нажимаем вверху меню далее Settings далее SSH keys and GPG keys далее New SSH
+  key
+
+
+  вводим свой ключ полностью
+
+
+  на сервере пишем
+
+  git init
+
+  git remote add origin git@github.com : < руководство > / <имя репозитория>
+  .git
+
+  например, git remote add origin git@github.com : alexkaaa / AlexKa2.git
+
+  далее
+
+  - git add . 
+
+  - git commit -m 'create project' 
+
+  - git push origin master
+
+  подтверждаем yes
+
+  7. переходим на сайт https://project.subquery.network/ и входим в него через
+  GitHab
+
+  нажимаем Create Project
+
+  заполняем
+
+
+  нажимаем Create Project
+
+  Deploy
+
+  Deploy. Update
+
+  Поздравляю!!! Вы создали проект!!! Далее выполняем задания
+
+  Выражаю благодарность за помощь Motiio.
+
+  Subquery
+
+  2
+
+
+
+
+
+
+
+
+  More from AlexKa
+
+  Follow
+
+
+  About
+
+
+  Write
+
+
+  Help
+
+
+  Legal
+schema: ./schema.graphql
+network:
+  endpoint: wss://polkadot.api.onfinality.io/public-ws
+  dictionary: https://api.subquery.network/sq/subquery/dictionary-polkadot
+dataSources:
+  - name: main
+    kind: substrate/Runtime
+    startBlock: 1
+    mapping:
+      handlers:
+        - handler: handleBlock
+          kind: substrate/BlockHandler
+        - handler: handleEvent
+          kind: substrate/EventHandler
+          filter:
+            module: balances
+            method: Deposit
+        - handler: handleCall
+          kind: substrate/CallHandler
